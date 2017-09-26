@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body onload="loadDoc()">
+        
+        <div id="contenido"></div>
+    
+        <script>
+        
+        function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            var xhttp2 = new XMLHttpRequest();
+            
+            xhttp2.open("GET", "https://jsonplaceholder.typicode.com/users", true);
+            xhttp2.send();
+            
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var variable = JSON.parse(this.responseText);
+                    for(var x = 0 ; x < variable.length;x++){
+                document.getElementById("contenido").innerHTML += "ID: "+variable[x].id+"<br>" ;
+                document.getElementById("contenido").innerHTML += "USER ID: "+obtenerUsuario(variable[x].userId,xhttp2)+"<br>" ;
+                document.getElementById("contenido").innerHTML += "TITLE: "+variable[x].title+"<br>" ;
+                document.getElementById("contenido").innerHTML += "BODY: "+variable[x].body+"<br><br>" ;
+                    }
+            }
+            };
+            
+        xhttp.open("GET", "http://jsonplaceholder.typicode.com/posts", true);
+        xhttp.send();
+}
+
+        function obtenerUsuario(usuario, xhttp){
+            var auxi;
+                    var variable = JSON.parse(xhttp.responseText);
+                   for(var auxiliar in variable){
+                     //  alert(variable[auxiliar].username)
+                       if(usuario == variable[auxiliar].id){
+                           auxi= variable[auxiliar].username;
+                           break;
+                        }
+                    }
+                    
+              
+            return auxi;
+            
+            
+        }
+        
+        </script>
+    </body>
+</html>
